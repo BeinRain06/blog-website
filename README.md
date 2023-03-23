@@ -1,70 +1,142 @@
-# Getting Started with Create React App
+# To Do List App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sideland : **## To Do List Application**
 
-## Available Scripts
+> ### Overview :
 
-In the project directory, you can run:
+- Schedule a plan for what you should do every single that pass helps better build strong behaviours to become someone who achieve great things. ToDo List App help you plan your actions, or tasks through the day. This application remind you of each previous step you have taken and the next step you need to dive in.
 
-### `npm start`
+## Interest
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You might want to spot how to use:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- -useState Hook one of the most used state of react using destructuring syntax of javascript
+  like example:
+  const [notes, setNotes] = useState(() => {
+  return JSON.parse(localStorage.getItem("list-notes")) ?? [];
+  });
 
-### `npm test`
+- -useEffect Hook used for updating additional codes REACT-DOM everytime some change apply to a specific variable or group of
+- use here to update DoM and store variable in LocalStorage
+  useEffect(() => {
+  localStorage.setItem("list-notes", JSON.stringify(notes));
+  }, [notes]);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Links
 
-### `npm run build`
+- Solution URL: [https://github.com/BeinRain06/todo-list-app.git](https://github.com/BeinRain06/todo-list-app.git)
+- Live Site URL: [https://beinrain06.github.io/todo-list-app/](https://beinrain06.github.io/todo-list-app/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Description : \* challenge issue
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- i faced difficulty to update `notes` using the function `setNotes` from useState() to store new value for our input[name="title"] and textarea[name="content"], finally got that destructuring value written like :
+- const {name, value}= event.target means in fact calling variables named **name** and **value** to be equal to properties :
+- `event.target.name` and `event.target.value`
+- and also that affecting variable [name] in `setNotes` function will affect the name property of object initially declared in useState hook :
+- > const handleChange = (event) => {
+  > const { name, value } = event.target;
+  > setNote((prevNote) => {
+      return { ...prevNote, [name]: value };
+  });
+  };
+- i encounter also difficulty when setting button `delete` to operate to remove cartNote from the DOM as i was affecting directly the array `notes` with the **filter()** method of javascript instead of doing the following by wrapping all my function filter() array `notes` in the only function here capable to affect the re-render of array `notes` which is `setNotes` **function**. Like this:
+- > const deleteCard = (id) => {
+  > setNotes((prevNotes) => {
+      return prevNotes.filter((note, index) => {
+        return index !== id;
+      });
+  });
+  };
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## CSS Structures:
 
-### `npm run eject`
+> - <App/> Component , three main components :
+>
+> -<Header/> -<FormArea/> -<ListNotes/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Picture**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+![./Desktop-ToDoList-App.png](./Desktop-ToDoList-App.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+# What I learned
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### React Hook Enhanced
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**_useState Hook_** one of the most used state of react using destructuring syntax of javascript
+_like example_: const[favourites, setFavourites] = useState([]);
+_ favourites : is a variable
+_ setFavourites : function to change the above variable (favourites)
+_ [] : empty array - initial state value of _ favourites \*
 
-### Code Splitting
+>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**_useEffect Hook_** used for updating additional codes REACT-DOM everytime some change apply to a specific variable or group of set variables is passed in a second parameter as `array` (ex: [], [data], [data, searchValue], ...)
 
-### Analyzing the Bundle Size
+- _sample_ : useEffect(Callback function, [state])
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+* **example**: useEffect(() => {fetchMovies(searchValue)}, [searchValue]);
 
-### Making a Progressive Web App
+  > tip : don't use any **return** inside the useEffect Hook
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> fetchMovies(searchvalue) : function fecthMovies with argument -searchvalue
+> [searchValue] : var _searchValue_ that makes re-render of REACT-DOM whenvever its change.
 
-### Advanced Configuration
+### javaScript Enhanced
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **map()** method javascript returns a new Array with value passed as argument when looping at an array
 
-### Deployment
+  > e.g: const myMovies = movies.map((movie) => {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+                     return (
+                       <MovieCart key={movie.imdbID} movie={movie}/>
+                     )
+                   });
 
-### `npm run build` fails to minify
+- **filter()** method javascript returns a nez array with value that meet conditions returned inside
+  > e.g: const newFavourite = favourites.filter((favourite) => favourite.imdbID !== movie.imdbID );
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### utilities Materials:
+
+    -Materials icons [https://mui.com/material-ui/material-icons/](https://mui.com/material-ui/material-icons/)
+
+### Mobile Responsiveness
+
+    - Mobile reponsiveness for mobile max-width: 475px ,max-width: 715px,
+
+**Picture**
+
+---
+
+![./Mobile-ToDoList-App.png](./Mobile-ToDoList-App.png)
+
+---
+
+## Callback History:
+
+- Age of computer. The electronic organizer was very popular in years 1990's before the avent of computer and smartphone. Replacing paper organizer helps to store calendar, address book , make planification of some specific work, organize our tasks in one right portable device. No need to write all of our schedule in sevral pieces of paper that could be lost but to designed program installed in the electronic organizer,to keep all our intend.
+  Now is the world of smartphone and area of AI where virtual things are set like real things, but we remind how helpful it is very simple can;t get virus, stable, don;t need updation to work , handy. Brief if you plan o have a secure schedule in one device you might think of an electronic organizer, all the functions inside meets our need o organize with ease small task of our daily baisis.
+
+**1975**. \_The first electronic organizer replacing _paper-based personal organizer_ was invented
+by indian businessman Satyan Pitroda
+with a LCD screen and a alpha-numeric keypad
+
+## Useful Resources :
+
+Copycat : ['https://www.copycat.dev/blog/react-localstorage/'] : helps me make my localstorage item persist in my website app
+
+## Acknowledge:
+
+This project always remember the Team :
+
+-Brad Traversy: enlight our javascript underanstang of to-do-app project.
+
+-Sufa Digital: udemy with his light how to achieve our project
+
+## Author
+
+- Frontend Mentor - [https://www.frontendmentor.io/profile/BeinRain06](https://www.frontendmentor.io/profile/BeinRain06)
+- Twitter - [https://twitter.com/nest_Ngoueni](https://twitter.com/nest_Ngoueni)

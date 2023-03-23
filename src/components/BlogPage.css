@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.blog_container {
+  position: relative;
+  width: 100%;
+}
+
+.blog_content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 90%;
+  margin: 1rem auto;
+  gap: 0.5rem;
+}
+
+.box {
+  display: grid;
+  height: 200px;
+  background-color: aqua;
+  border: 1px solid black;
+}
