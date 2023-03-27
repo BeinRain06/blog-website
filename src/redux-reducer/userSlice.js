@@ -4,7 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     isSignedIn: false,
-    searchInput: "",
+    searchInput: "art",
     blogData: null,
     userData: null,
   },
@@ -29,16 +29,16 @@ export const { setIsSignedIn, setSearchInput, setBlogData, setUserData } =
   userSlice.actions;
 
 // export current State (isSignedIn, searchInput, blogData, userData)
-export const selectedSignedIn = (state) => {
+export const selectIsSignedIn = (state) => {
   return state.user.isSignedIn;
 };
-export const selectedSearchInput = (state) => {
+export const selectSearchInput = (state) => {
   return state.user.searchInput;
 };
-export const selectedBlogData = (state) => {
+export const selectBlogData = (state) => {
   return state.user.blogData;
 };
-export const selectedUserData = (state) => {
+export const selectUserData = (state) => {
   return state.user.userData;
 };
 

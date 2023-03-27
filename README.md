@@ -1,58 +1,85 @@
-# To Do List App
+# Blog Website App
 
-Sideland : **## To Do List Application**
+Sideland : **## Blog Website Application**
 
 > ### Overview :
 
-- Schedule a plan for what you should do every single that pass helps better build strong behaviours to become someone who achieve great things. ToDo List App help you plan your actions, or tasks through the day. This application remind you of each previous step you have taken and the next step you need to dive in.
+- Finds informations about topics you like, stay update to the last trends of the markets, open source topics for you knowledge.
 
 ## Interest
 
-You might want to spot how to use:
+You really do, want to understand about:
 
-- -useState Hook one of the most used state of react using destructuring syntax of javascript
-  like example:
-  const [notes, setNotes] = useState(() => {
-  return JSON.parse(localStorage.getItem("list-notes")) ?? [];
-  });
+- -@reduxjs/toolkit is a feature of `react-redux` that simplify state management over **functions** or **variables** that changes state in our mounted components during their lifecycle.
 
-- -useEffect Hook used for updating additional codes REACT-DOM everytime some change apply to a specific variable or group of
-- use here to update DoM and store variable in LocalStorage
-  useEffect(() => {
-  localStorage.setItem("list-notes", JSON.stringify(notes));
-  }, [notes]);
+- -{useDispatch, useSelector} from `react-redux`
+- > `useDispatch` allows to set change of functions encompasses in reducer file (userSlice.js) into others local components that need to change state of any `initialState` properties coming from reducer file storage via store file (store.js).
+- > useSelector enable to get state of any `initialState` properties from reducer file (userSlice.js) and print them to specifics components that need to.
 
 ### Links
 
-- Solution URL: [https://github.com/BeinRain06/todo-list-app.git](https://github.com/BeinRain06/todo-list-app.git)
-- Live Site URL: [https://beinrain06.github.io/todo-list-app/](https://beinrain06.github.io/todo-list-app/)
+- Solution URL: [https://github.com/BeinRain06/blog-website.git](https://github.com/BeinRain06/blog-website.git)
+- Live Site URL: [https://beinrain06.github.io/blog-website/](https://beinrain06.github.io/blog-website/)
 
 ## Description : \* challenge issue
 
-- i faced difficulty to update `notes` using the function `setNotes` from useState() to store new value for our input[name="title"] and textarea[name="content"], finally got that destructuring value written like :
-- const {name, value}= event.target means in fact calling variables named **name** and **value** to be equal to properties :
-- `event.target.name` and `event.target.value`
-- and also that affecting variable [name] in `setNotes` function will affect the name property of object initially declared in useState hook :
-- > const handleChange = (event) => {
-  > const { name, value } = event.target;
-  > setNote((prevNote) => {
-      return { ...prevNote, [name]: value };
-  });
-  };
-- i encounter also difficulty when setting button `delete` to operate to remove cartNote from the DOM as i was affecting directly the array `notes` with the **filter()** method of javascript instead of doing the following by wrapping all my function filter() array `notes` in the only function here capable to affect the re-render of array `notes` which is `setNotes` **function**. Like this:
-- > const deleteCard = (id) => {
-  > setNotes((prevNotes) => {
-      return prevNotes.filter((note, index) => {
-        return index !== id;
-      });
-  });
-  };
+- i faced difficulty to fetch data using **async/await** with `axios` library as i was doing it with a looks like syntax of **fetch api** :
+
+  - const fetchData = async () => {
+    try {
+    const response =
+    await axios
+    .get(url)
+    .then((response) => (
+    dispatch(setBlogData(response.data));
+    setBlogs(response.data);
+    console.log(response.data);
+    setLoading(false);
+    ));  
+     } catch (error) {
+    console.log(`error:${error}`);
+    }
+    };
+    **instead** of writing **this**:
+  - const fetchData = async () => {
+    try {
+    const response = await axios.get(url);
+
+        dispatch(setBlogData(response.data));
+          setBlogs(response.data);
+        console.log(response.data);
+        setLoading(false);
+
+    } catch (error) {
+    console.log(`error:${error}`);
+    }
+    };
+
+- i was also in trouble when encountering error **429** zith `axios` **too many request** because i was calling many
+  `response.data`in many function (dispatch, console.log, setBlogs, ).
+  I figure out that to avoid this error i need to call `response.data` just in one function to now use it to be available for our fetching. Like this :
+
+  - const fetchData = async () => {
+    try {
+    const response = await axios.get(url);
+    dispatch(setBlogData(response.data));
+    } catch (error) {
+    console.log(`error:${error}`);
+    }
+    };
+
+i also omit to map `articles` property of Gnews API after fetching data writing:
+
+- { blogData?.map((insisData, index) => {...})}
+  **instead** of :
+- { blogData?.articles?.map((insisData, index) => {...})}
+  and i got the error: **blogData is not a function**
 
 ## CSS Structures:
 
 > - <App/> Component , three main components :
 >
-> -<Header/> -<FormArea/> -<ListNotes/>
+> -<Navbar/> -<HomePage/> -<BlogPage/>
 
 **Picture**
 
@@ -66,38 +93,73 @@ You might want to spot how to use:
 
 ### React Hook Enhanced
 
-**_useState Hook_** one of the most used state of react using destructuring syntax of javascript
-_like example_: const[favourites, setFavourites] = useState([]);
-_ favourites : is a variable
-_ setFavourites : function to change the above variable (favourites)
-_ [] : empty array - initial state value of _ favourites \*
+**_@reduxjs/toolkit_** a feature of react-redux that manages state instead of using useContext API. Easy to proceed react-redux such similar in ideas with useContext Hool API achieves implementation of managed state in two main steps.
+The First one is: -**To create** a function called reducer using **createSlice** to operate on whichh kind of variables we need to pass as properties in or to set any function that change thes variables through time in the life cycle of our components
+
+> Here we have 4 level of actions in our **useSlice.js** file to:
+
+- **import** `createSlice` from @reduxjs/toolkit
+- >
+-
+- **initialize** our info-base to share `const userSlice = createSlice()`
+- **populate our properties** inside `createSlice()`
+  - e.g:
+    > -name : "user", // _the name of reducer_
+    > -initialState: {
+    > isSignedIn: false, // _initialize each property that will change during the render of our page by set actions_
+    > ...
+    > },
+    > -reducers : {
+    > setIsSignedIn: (state, action) => {
+    > state.isSignedIn = action.payload; // _function that perform change_
+    > },
+    > ...
+    > }
 
 >
 
-**_useEffect Hook_** used for updating additional codes REACT-DOM everytime some change apply to a specific variable or group of set variables is passed in a second parameter as `array` (ex: [], [data], [data, searchValue], ...)
+- **export** of functions that **set change**
 
-- _sample_ : useEffect(Callback function, [state])
+  - e.g:
+  - export const { setIsSignedIn, setSearchInput, setBlogData, setUserData } =
+    userSlice.actions;
 
-* **example**: useEffect(() => {fetchMovies(searchValue)}, [searchValue]);
+>
 
-  > tip : don't use any **return** inside the useEffect Hook
+- **export** of functions that **get change**
+  - e.g:
+  - export const selectBlogData = (state) => {
+    return state.user.blogData; };
 
-> fetchMovies(searchvalue) : function fecthMovies with argument -searchvalue
-> [searchValue] : var _searchValue_ that makes re-render of REACT-DOM whenvever its change.
+The second on is:
+
+- **To store** our managed data using **configureStore** in such a way that every components in need to access our data will refer to the place where it is stored in purpose to be accessible for multiple components.
+
+>
+
+**_react-redux_** @reactjs/toolkit functions or variables changing can't be applied directly into differents components requesting these settle changes. To succeedm access has to be done by using two proper features of his parent `react-redux` that are `useDispatch`and `useSelector`
+
+> `useDispatch` will help us define a **functions** that enables to set the current changes being occured by many actions triggered in each of our component involved in the process of changing his content in some way.
+>
+> - e.g:
+> - const dispatch = useDispatch();
+> - const login = () => {
+
+      console.log(data);
+      dispatch(setBlogData(data));
+      dispatch(setIsSignedIn(true));
+      };
+
+> `useSelector` helps us define **variables** that get `current state`of our properties inside reducer file (userSlice.js) from our store file (store.js) to display or return in any components that are in desire.
+>
+> - e.g:
+> - const blogData = useSelector(selectBlogData);
 
 ### javaScript Enhanced
 
 - **map()** method javascript returns a new Array with value passed as argument when looping at an array
 
-  > e.g: const myMovies = movies.map((movie) => {
-
-                     return (
-                       <MovieCart key={movie.imdbID} movie={movie}/>
-                     )
-                   });
-
-- **filter()** method javascript returns a nez array with value that meet conditions returned inside
-  > e.g: const newFavourite = favourites.filter((favourite) => favourite.imdbID !== movie.imdbID );
+  > e.g: blogData.map((insideData) => (...));
 
 ### utilities Materials:
 
@@ -117,22 +179,24 @@ _ [] : empty array - initial state value of _ favourites \*
 
 ## Callback History:
 
-- Age of computer. The electronic organizer was very popular in years 1990's before the avent of computer and smartphone. Replacing paper organizer helps to store calendar, address book , make planification of some specific work, organize our tasks in one right portable device. No need to write all of our schedule in sevral pieces of paper that could be lost but to designed program installed in the electronic organizer,to keep all our intend.
-  Now is the world of smartphone and area of AI where virtual things are set like real things, but we remind how helpful it is very simple can;t get virus, stable, don;t need updation to work , handy. Brief if you plan o have a secure schedule in one device you might think of an electronic organizer, all the functions inside meets our need o organize with ease small task of our daily baisis.
+- Age of internet. is it newspaper still on demand.
+- Yeah it is and it is beautiful to read article made in pieces of wood filled with anchor, most people also with the interconnection of people trend and achieves most bi informing at a greatest scale the people that share some passions about many topics and also want to grow their knowledges about features they don't usually see but are aware of their existences.
+- Blog Website nowadays, everyone can create one, the duty is to share something and connect with people that have something to do with your information. Informations valuable depends on the time and th analysis of their truthness or effect in practice, world of net is growing and many bloggers comes outside.
+- This blog website is a blog sharing information info fetched from a public API Gnews API, for our purpose to design example of Blog for you.
 
-**1975**. \_The first electronic organizer replacing _paper-based personal organizer_ was invented
-by indian businessman Satyan Pitroda
-with a LCD screen and a alpha-numeric keypad
+**2015**. \__React Stable..._, `react-redux` was released by **Dan Abramov** and **Andrew Clark**
+under the copyright of **facebook**
 
 ## Useful Resources :
 
-Copycat : ['https://www.copycat.dev/blog/react-localstorage/'] : helps me make my localstorage item persist in my website app
+PedroTech Youtbe : ['ReactJS Course[14]- Redux Toolkit Tutorial'] : allows to me to have an intro in react-redux and reduxjs/toolkit
+to stand it on our project.
 
 ## Acknowledge:
 
 This project always remember the Team :
 
--Brad Traversy: enlight our javascript underanstang of to-do-app project.
+-PedroTech: enlight our understanding of @reduxjs/toolkit feature.
 
 -Sufa Digital: udemy with his light how to achieve our project
 

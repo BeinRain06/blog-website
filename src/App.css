@@ -37,4 +37,9 @@
   position: relative;
   width: 100vw;
   text-align: center;
+  background: linear-gradient(
+    to bottom,
+    rgb(241, 240, 164),
+    rgb(228, 167, 139)
+  );
 }

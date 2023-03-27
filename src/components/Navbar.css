@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Bona+Nova:wght@700&family=Lato:wght@700&family=Raleway:wght@300&display=swap");
+
+/* font-family: 'Bona Nova', serif;
+font-family: 'Lato', sans-serif;
+font-family: 'Raleway', sans-serif; */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,6 +18,7 @@
   align-items: center;
   background: rgb(15, 15, 15);
   color: #fff;
+  font-family: "Raleway", sans-serif;
 }
 
 .nav_content {
@@ -20,52 +27,311 @@
   justify-content: space-between;
   align-items: center;
   padding-block: 0.84rem;
+  gap: 1rem;
   margin: 0 2rem;
 }
 
+.logo_wrap h2 span.bob_fist {
+  font-family: "Bona Nova", serif;
+}
+
 .search_wrap {
-  width: 40%;
-  margin: 0 auto;
+  height: 30px;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .input_wrap {
-  width: 100%;
-  height: 2rem;
   display: flex;
   justify-content: center;
-  justify-content: center;
-  margin: 0 auto;
+  justify-content: flex-start;
   gap: 0.15rem;
 }
 
 .input_search {
-  display: flex;
-  flex-basis: 70%;
+  display: block;
+  font-size: 16px;
+  width: calc(14em);
   height: calc(100% - 0.1em);
   outline: none;
+  text-indent: 5%;
   border: 1px solid transparent;
 }
+
 .btn_search {
-  display: flex;
-  flex-basis: 30%;
+  display: block;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   height: calc(100% - 0.1em);
+  padding: 0 0.2rem;
   outline: none;
   border: 1px solid transparent;
-  text-indent: 15%;
-  /* border-left: 4px solid rgb(46, 46, 46); */
+  background: linear-gradient(10deg, rgb(176, 184, 189), rgb(204, 175, 175));
 }
 
 .user_space {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .avatar_wrap {
   display: flex;
+  width: 25%;
+  height: 60%;
   flex-direction: column;
   justify-content: center;
+}
+
+.avatar_img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 2px solid rgb(0, 1, 46);
+  box-shadow: 0px 0px 6px rgb(65, 44, 49);
+}
+
+.with_mobile {
+  position: relative;
+  right: calc(1rem);
+  display: block;
+}
+.mobile_nav {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+  background: rgb(29, 49, 136);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.mob_nav_container {
+  position: absolute;
+  top: 2.2rem;
+  right: -1.5rem;
+  width: 210px;
+  height: 80px;
+  background: #333;
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+  z-index: 3;
+  border-right: 7px solid rgb(29, 49, 136);
+}
+
+.mob_nav_container.showcase {
+  position: absolute;
+  top: 2.2rem;
+  right: -1.5rem;
+  width: 140px;
+  height: 122px;
+  background: #333;
+  color: #fff;
+  visibility: visible;
+  opacity: 1;
+  transition: all 600ms ease-in-out;
+}
+
+.mob_nav_content {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  transform: scale(1);
+  opacity: 1;
+  transition: all 1s ease-in-out 600ms;
+}
+
+.avatar_nav_wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1rem;
+  gap: 0.3rem;
+}
+
+.avatar_nav_img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgb(139, 48, 48);
+  box-shadow: 0px 0px 6px rgb(65, 44, 49);
+}
+
+@media (max-width: 800px) {
+  .logo_wrap h2 span.bob_fist {
+    font-family: "Bona Nova", serif;
+    font-size: 15px;
+  }
+
+  .nav_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-block: 0;
+    margin: 0 auto;
+    gap: 0.2rem;
+  }
+
+  .search_wrap {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .input_wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 0.15rem;
+  }
+
+  .input_search {
+    display: flex;
+    font-size: 14px;
+    width: calc(18em);
+  }
+
+  .btn_search {
+    display: flex;
+    font-size: 12px;
+  }
+
+  .user_space {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 12px;
+  }
+
+  .goo_logout {
+    font-size: 12px;
+    height: auto;
+  }
+
+  .avatar_wrap {
+    display: flex;
+    width: 25%;
+    height: 30%;
+  }
+}
+
+@media (max-width: 600px) {
+  .user_space {
+    display: none;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .mobile_nav {
+    visibility: visible;
+    opacity: 1;
+    transition: all 600ms ease-out;
+  }
+
+  .nav_content {
+    padding-block: 0.6rem;
+    justify-content: center;
+    margin: 0 0.5rem;
+  }
+
+  .search_wrap {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  .input_wrap {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .input_search {
+    width: calc(14em);
+    display: flex;
+    font-size: 14px;
+  }
+
+  .btn_search {
+    display: flex;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 474px) {
+  .nav_content {
+    padding-block: 0.6rem;
+    justify-content: center;
+    margin: 0 0.5rem;
+    width: 100%;
+    height: 60px;
+  }
+  .search_wrap {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: translate(-25%, 0);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(4.4em);
+    height: 100%;
+  }
+  .input_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    height: 100%;
+    margin: 0 auto;
+  }
+  .input_search {
+    width: calc(6em);
+    display: flex;
+    font-size: 14px;
+    height: 50%;
+  }
+  .btn_search {
+    display: flex;
+    font-size: 14px;
+    height: 50%;
+    padding: 0 1rem;
+    width: calc(6em);
+  }
+
+  .mobile_nav {
+    visibility: visible;
+    opacity: 1;
+    transition: all 600ms ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .with_mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+  }
 }
