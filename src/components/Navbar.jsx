@@ -2,10 +2,12 @@ import React, { useRef } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import DeckIcon from "@mui/icons-material/Deck";
+import { GoogleLogout } from "google-login";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSignedIn,
   selectSearchInput,
+  selectUserData,
   setIsSignedIn,
   setSearchInput,
   setUserData,
@@ -18,12 +20,13 @@ function Navbar() {
 
   const searchInput = useSelector(selectSearchInput);
   const isSignedIn = useSelector(selectIsSignedIn);
+  const userData = useSelector(selectUserData);
 
   const handleChange = (event) => {
     dispatch(setSearchInput(event.target.value));
   };
 
-  const resetDefaultState = () => {
+  const logout = () => {
     dispatch(setIsSignedIn(false));
     dispatch(setUserData(null));
     dispatch(selectSearchInput("art"));
@@ -44,30 +47,51 @@ function Navbar() {
             </span>
           </h2>
         </div>
-        <div className="search_wrap">
-          <form className="input_wrap">
-            <input
-              type="text"
-              className="input_search"
-              value={searchInput}
-              placeholder="Search items..."
-              onChange={handleChange}
-            />
-            <button className="btn_search">Search</button>
-          </form>
-        </div>
+        {isSignedIn && (
+          <div className="search_wrap">
+            <form className="input_wrap">
+              <input
+                type="text"
+                className="input_search"
+                value={searchInput}
+                placeholder="Search items..."
+                onChange={handleChange}
+              />
+              <button className="btn_search">Search</button>
+            </form>
+          </div>
+        )}
         <div className="user_space">
           {isSignedIn ? (
             <div className="avatar_wrap">
-              <img src="" alt="error_avatar" className="avatar_img" />
-              <p className="email">jdoe@gmail.com</p>
+              <img
+                className="avatar_img"
+                src={userData?.imageUrl}
+                alt={userData?.name}
+              />
+              <div className="signedInside">
+                <h1 className="signedIn">{userData?.givenName}</h1>
+                <GoogleLogout
+                  clientId="581483113470-oqkkc1mg8srogu83q965h4i7k9lm9srh.apps.googleusercontent.com"
+                  render={(renderProps) => (
+                    <button
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                      className="goo_logout"
+                    >
+                      Logout
+                    </button>
+                  )}
+                  onLogoutSuccess={logout}
+                />
+              </div>
             </div>
           ) : (
-            <AccountCircleIcon />
+            <div className="notSignedIn">
+              <AccountCircleIcon />
+              <h1 className="notSignedIn"> no user </h1>
+            </div>
           )}
-          <button className="goo_logout" onClick={() => resetDefaultState()}>
-            Google Logout
-          </button>
         </div>
         <div className="with_mobile">
           <button className="mobile_nav" onClick={addMenuContent}>
@@ -77,18 +101,34 @@ function Navbar() {
             <div className="mob_nav_content">
               {isSignedIn ? (
                 <div className="avatar_nav_wrap">
-                  <img src="" alt="error_avatar" className="avatar_nav_img" />
-                  <p className="email_nav">jdoe@gmail.com</p>
+                  <img
+                    className="avatar_nav_img"
+                    src={userData?.imageUrl}
+                    alt={userData?.name}
+                  />
+                  <div className="signedInside">
+                    <h1 className="signedIn">{userData?.givenName}</h1>
+                    <GoogleLogout
+                      clientId="581483113470-oqkkc1mg8srogu83q965h4i7k9lm9srh.apps.googleusercontent.com"
+                      render={(renderProps) => (
+                        <button
+                          onClick={renderProps.onClick}
+                          disabled={renderProps.disabled}
+                          className="goo_logout"
+                        >
+                          Logout
+                        </button>
+                      )}
+                      onLogoutSuccess={logout}
+                    />
+                  </div>
                 </div>
               ) : (
-                <AccountCircleIcon />
+                <div className="notSignedIn">
+                  <AccountCircleIcon />
+                  <h1 className="notSignedIn"> no user </h1>
+                </div>
               )}
-              <button
-                className="goo_logout"
-                onClick={() => resetDefaultState()}
-              >
-                Google Logout
-              </button>
             </div>
           </div>
         </div>
