@@ -1,7 +1,11 @@
 import React from "react";
-import { setIsSignedIn } from "../redux-reducer/userSlice";
-import { useDispatch } from "react-redux";
-import { GoogleLogin } from "google-login";
+import {
+  setIsSignedIn,
+  selectIsSignedIn,
+  setUserData,
+} from "../redux-reducer/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { GoogleLogin } from "react-google-login";
 import "./HomePage.css";
 
 function HomePage() {
@@ -10,7 +14,7 @@ function HomePage() {
 
   const login = (response) => {
     console.log(response);
-    dispatch(setSignedIn(true));
+    dispatch(setIsSignedIn(true));
     dispatch(setUserData(response.profileObj));
   };
 
@@ -43,7 +47,7 @@ function HomePage() {
                       <button
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
-                        className="login__button"
+                        className="goo_login"
                       >
                         Login with Google
                       </button>

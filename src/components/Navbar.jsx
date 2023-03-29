@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import DeckIcon from "@mui/icons-material/Deck";
-import { GoogleLogout } from "google-login";
+import { GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectIsSignedIn,
@@ -22,14 +22,24 @@ function Navbar() {
   const isSignedIn = useSelector(selectIsSignedIn);
   const userData = useSelector(selectUserData);
 
-  const handleChange = (event) => {
+  const [newSearch, setNewSearch] = useState("art");
+
+  /* const handleChange = (event) => {
     dispatch(setSearchInput(event.target.value));
+  }; */
+
+  const handleChange = (event) => {
+    setNewSearch(event.target.value);
   };
 
-  const logout = () => {
+  const handleClick = (event) => {
+    event.preventDefault();
+    dispatch(setSearchInput(newSearch));
+  };
+
+  const logout = (response) => {
     dispatch(setIsSignedIn(false));
     dispatch(setUserData(null));
-    dispatch(selectSearchInput("art"));
   };
 
   const addMenuContent = () => {
@@ -53,11 +63,13 @@ function Navbar() {
               <input
                 type="text"
                 className="input_search"
-                value={searchInput}
+                value={newSearch}
                 placeholder="Search items..."
                 onChange={handleChange}
               />
-              <button className="btn_search">Search</button>
+              <button className="btn_search" onClick={handleClick}>
+                Search
+              </button>
             </form>
           </div>
         )}
@@ -83,13 +95,15 @@ function Navbar() {
                     </button>
                   )}
                   onLogoutSuccess={logout}
+                  onLogoutFailure={(err) => console.log("fail", err)}
+                  isSignedIn={false}
                 />
               </div>
             </div>
           ) : (
             <div className="notSignedIn">
               <AccountCircleIcon />
-              <h1 className="notSignedIn"> no user </h1>
+              <h3 className="notSignedIn"> no user </h3>
             </div>
           )}
         </div>
@@ -120,6 +134,8 @@ function Navbar() {
                         </button>
                       )}
                       onLogoutSuccess={logout}
+                      onLogoutFailure={(err) => console.log(err)}
+                      isSignedIn={false}
                     />
                   </div>
                 </div>

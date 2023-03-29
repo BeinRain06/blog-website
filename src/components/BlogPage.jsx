@@ -52,7 +52,7 @@ function BlogPage() {
                   <img
                     src={insideData.image}
                     className="blog_img"
-                    alt="error blogpage"
+                    alt="waiting"
                   />
                   <h3 className="title_item">{insideData.title}</h3>
                   <div className="description_wrap">
